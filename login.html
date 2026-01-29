@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录 - 广东赛肯户外运动器械有限公司</title>
+    <style>
+        /* 全局样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+
+        /* 页面背景 */
+        body {
+            background-color: #f5f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        /* 登录表单容器 */
+        .login-container {
+            background-color: white;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        /* 登录标题 */
+        .login-title {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 2.5rem;
+            font-weight: bold;
+        }
+
+        /* 表单组 */
+        .form-group {
+            margin-bottom: 1.8rem;
+            text-align: left;
+        }
+
+        /* 表单标签 */
+        .form-group label {
+            display: block;
+            color: #2c3e50;
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+        }
+
+        /* 输入框 */
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #e0e6ed;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        /* 登录按钮 */
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .login-btn:hover {
+            background-color: #1a2530;
+            transform: translateY(-2px);
+        }
+
+        /* 提示信息 */
+        .tip-text {
+            margin-top: 1.5rem;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        /* 错误提示 */
+        .error-tip {
+            color: #e74c3c;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2 class="login-title">广东赛肯导航页 - 登录</h2>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">用户名</label>
+                <input type="text" id="username" class="form-input" placeholder="请输入用户名" required>
+            </div>
+            <div class="form-group">
+                <label for="password">密码</label>
+                <input type="password" id="password" class="form-input" placeholder="请输入密码" required>
+            </div>
+            <button type="submit" class="login-btn">登录</button>
+            <div class="error-tip" id="errorTip">用户名或密码错误，请重试</div>
+        </form>
+        <p class="tip-text">测试账号：admin | 测试密码：123456</p>
+    </div>
+
+    <script>
+        // 登录表单提交事件
+        document.getElementById("loginForm").addEventListener("submit", function(e) {
+            // 阻止表单默认提交行为
+            e.preventDefault();
+
+            // 获取输入的用户名和密码
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const errorTip = document.getElementById("errorTip");
+
+            // 简单登录验证（可后续修改为后台接口验证）
+            const validUsername = "admin";
+            const validPassword = "123456";
+
+            if (username === validUsername && password === validPassword) {
+                // 登录成功：保存登录状态到本地存储（有效期24小时）
+                const loginState = {
+                    isLogin: true,
+                    username: username,
+                    expireTime: new Date().getTime() + 24 * 60 * 60 * 1000 // 24小时后过期
+                };
+                localStorage.setItem("saikenLoginState", JSON.stringify(loginState));
+
+                // 跳转至首页
+                window.location.href = "index.html";
+            } else {
+                // 登录失败：显示错误提示
+                errorTip.style.display = "block";
+                // 3秒后隐藏错误提示
+                setTimeout(() => {
+                    errorTip.style.display = "none";
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>
