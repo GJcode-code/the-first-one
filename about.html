@@ -249,6 +249,15 @@ window.onload = function() {
                 dropdownMenu.classList.remove("show");
             }
         }
+        // ---------------------- 退出登录功能 ----------------------
+function logout() {
+    // 清除本地存储的登录状态
+    localStorage.removeItem("saikenLoginState");
+    // 关闭下拉菜单
+    closeDropdown();
+    // 跳转至登录页
+    window.location.href = "login.html";
+}
     </script>
 </body>
 </html>
