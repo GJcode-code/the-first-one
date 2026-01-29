@@ -104,6 +104,27 @@
             max-width: 1200px;
             margin: 8rem auto 2rem;
             padding: 0 2rem;
+            text-align: center;
+        }
+
+        /* 新增：返回首页按钮样式 */
+        .back-home-btn {
+            background-color: #2c3e50;
+            color: white;
+            text-decoration: none;
+            padding: 0.8rem 1.6rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            display: inline-block;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        }
+
+        .back-home-btn:hover {
+            background-color: #1a2530;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
         }
 
         /* 入口卡片容器 - 一行两个 */
@@ -112,6 +133,8 @@
             grid-template-columns: repeat(2, 1fr);
             gap: 1.5rem;
             margin-top: 2rem;
+            /* 取消margin-top，避免和返回按钮间距过大 */
+            margin-top: 0;
         }
 
         /* 入口卡片 - 内容居中 */
@@ -182,6 +205,8 @@
 
     <!-- 主内容区域 -->
     <div class="main-content">
+        <!-- 新增：返回首页按钮 -->
+        <a href="index.html" class="back-home-btn">← 返回首页</a>
         <h2 style="text-align: center; color: #2c3e50;">常用网址入口</h2>
         <div class="entry-container" id="websiteContainer">
             <!-- 由JS动态生成卡片 -->
