@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于 - 广东赛肯户外运动器械有限公司</title>
+    <style>
+        /* 全局样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+
+        /* 页面背景 */
+        body {
+            background-color: #f5f7fa;
+        }
+
+        /* 导航栏样式 - 与首页统一 */
+        .navbar {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem 2rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 999;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .navbar-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .dropdown {
+            position: absolute;
+            right: 0;
+            display: inline-block;
+        }
+
+        .dropdown-btn {
+            color: #ecf0f1;
+            font-size: 1rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-btn:hover {
+            color: #3498db;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: #34495e;
+            min-width: 160px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            list-style: none;
+            border-radius: 5px;
+            margin-top: 0.5rem;
+        }
+
+        .dropdown-menu a {
+            color: #ecf0f1;
+            text-decoration: none;
+            padding: 0.8rem 1rem;
+            display: block;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #2c3e50;
+            color: #3498db;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+        }
+
+        /* 主内容区域 */
+        .main-content {
+            max-width: 1200px;
+            margin: 8rem auto 2rem;
+            padding: 0 2rem;
+            text-align: center;
+        }
+
+        /* 关于说明容器 */
+        .about-container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            margin-top: 2rem;
+            display: inline-block;
+            text-align: left;
+            max-width: 800px;
+        }
+
+        .about-container p {
+            color: #7f8c8d;
+            margin-top: 1rem;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 768px) {
+            .about-container {
+                width: 100%;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏（与首页统一） -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-title">广东赛肯户外运动器械有限公司导航页</div>
+            <div class="dropdown" onclick="toggleDropdown()">
+                <button class="dropdown-btn">更多 ▾</button>
+                <ul class="dropdown-menu" id="dropdownMenu">
+                    <li><a href="index.html" onclick="closeDropdown()">首页</a></li>
+                    <li><a href="website.html" onclick="closeDropdown()">常用网址</a></li>
+                    <li><a href="api.html" onclick="closeDropdown()">API接口</a></li>
+                    <li><a href="about.html" onclick="closeDropdown()">关于</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容区域 -->
+    <div class="main-content">
+        <h2 style="color: #2c3e50;">关于本导航页</h2>
+        <div class="about-container">
+            <p>1. 支持电脑/手机端适配，点击右上角「更多」展开导航，首页可直接跳转至各功能页面。</p>
+            <p>2. 新增网址/API入口仅需修改对应页面JS中的「websiteList」或「apiList」配置。</p>
+            <p>3. 卡片支持悬浮效果，链接点击可直接跳转（API接口可跳转文档或直接请求）。</p>
+            <p>4. 多页面架构，各功能模块独立，提升使用体验和可维护性。</p>
+        </div>
+    </div>
+
+    <script>
+        // 下拉菜单相关功能
+        function toggleDropdown() {
+            const dropdownMenu = document.getElementById("dropdownMenu");
+            dropdownMenu.classList.toggle("show");
+        }
+
+        function closeDropdown() {
+            const dropdownMenu = document.getElementById("dropdownMenu");
+            dropdownMenu.classList.remove("show");
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.closest('.dropdown')) {
+                const dropdownMenu = document.getElementById("dropdownMenu");
+                dropdownMenu.classList.remove("show");
+            }
+        }
+    </script>
+</body>
+</html>
