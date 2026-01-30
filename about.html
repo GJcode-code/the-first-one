@@ -198,39 +198,43 @@
 
     <script>
         // ---------------------- 登录状态校验（必须放在最前面） ----------------------
-function checkLoginState() {
-    // 从本地存储获取登录状态
+// 登录状态 + 页面权限校验
+function checkAuth() {
     const loginStateStr = localStorage.getItem("saikenLoginState");
     if (!loginStateStr) {
-        // 无登录状态，跳转至登录页
         window.location.href = "login.html";
         return false;
     }
 
-    // 解析登录状态
     const loginState = JSON.parse(loginStateStr);
-    const currentTime = new Date().getTime();
-
-    // 验证登录状态是否有效（未过期、已登录）
-    if (!loginState.isLogin || loginState.expireTime < currentTime) {
-        // 登录状态无效，清除本地存储并跳转登录页
+    const now = new Date().getTime();
+    
+    if (!loginState.isLogin || loginState.expireTime < now) {
         localStorage.removeItem("saikenLoginState");
         window.location.href = "login.html";
         return false;
     }
 
-    // 登录状态有效
+    const currentPage = "about.html";
+    if (!loginState.allowPages.includes(currentPage)) {
+        alert("你没有权限访问该页面");
+        window.location.href = "login.html";
+        return false;
+    }
     return true;
 }
 
-// 页面加载时立即校验登录状态
-window.onload = function() {
-    // 先校验登录
-    const isLoginValid = checkLoginState();
-    if (!isLoginValid) return;
+function logout() {
+    localStorage.removeItem("saikenLoginState");
+    closeDropdown();
+    window.location.href = "login.html";
+}
 
-    // 原有页面逻辑（保留不变，如下仅为示例，需与各页面原有onload逻辑合并）
-    // 例如index.html无渲染卡片，website.html渲染websiteCards等
+window.onload = function() {
+    const authOk = checkAuth();
+    if (!authOk) return;
+    
+    // about.html 原有其他 onload 逻辑（没有就留空）
 };
         // 下拉菜单相关功能
         function toggleDropdown() {
