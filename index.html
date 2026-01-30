@@ -118,13 +118,24 @@
             min-height: calc(100vh - 10rem);
         }
 
-      /* 巨大树木LOGO（兼容版样式） */
+      /* 文字版 LOGO 样式（替换原有 .tree-logo 样式） */
 .tree-logo {
     width: 280px;
     height: 280px;
     margin-bottom: 3rem;
-    /* 禁止外部样式覆盖SVG内部颜色，保证正常显示 */
-    fill: unset;
+    /* 文字样式 */
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #2c3e50; /* 与导航栏同色，保持风格统一 */
+    /* 文字居中（水平+垂直） */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* 可选：添加边框和背景，增强 LOGO 视觉效果 */
+    border: 3px solid #2c3e50;
+    border-radius: 50%;
+    background-color: #f8f9fa;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
         /* 首页按钮容器 */
@@ -197,15 +208,8 @@
 
     <!-- 主内容区域 -->
     <div class="main-content">
-        <!-- 兼容版巨大树木LOGO，替换原有SVG代码 -->
-<svg class="tree-logo" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
-  <!-- 树干 -->
-  <rect x="110" y="140" width="20" height="80" fill="#8B4513" rx="2"/>
-  <!-- 树冠三层 -->
-  <circle cx="120" cy="100" r="50" fill="#228B22"/>
-  <circle cx="120" cy="70" r="40" fill="#32CD32"/>
-  <circle cx="120" cy="40" r="30" fill="#90EE90"/>
-</svg>
+        <!-- 文字版 LOGO 替换原有 SVG -->
+<div class="tree-logo">这是一个LOGO</div>
 
         <!-- 首页三个跳转按钮 -->
         <!-- 首页按钮容器 - 保留原有样式，给每个按钮添加 data-page 属性标识对应页面 -->
