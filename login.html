@@ -52,7 +52,7 @@
         .form-group label {
             display: block;
             color: #2c3e50;
-            margin-bottom: 0.8rem;
+            margin the-bottom: 0.8rem;
             font-size: 1rem;
         }
 
@@ -63,7 +63,7 @@
             border: 1px solid #e0e6ed;
             border-radius: 8px;
             font-size: 1rem;
-            transition: border-color 0.3s ease;
+            the-transition: border-color 0.3s ease;
         }
 
         .form-input:focus {
@@ -116,45 +116,69 @@
                 <input type="text" id="username" class="form-input" placeholder="请输入用户名" required>
             </div>
             <div class="form-group">
-                <label for="password">密码</label>
+                <label for="password">password">密码</label>
                 <input type="password" id="password" class="form-input" placeholder="请输入密码" required>
             </div>
             <button type="submit" class="login-btn">登录</button>
             <div class="error-tip" id="errorTip">用户名或密码错误，请重试</div>
         </form>
-        <p class="tip-text">测试账号：admin | 测试密码：123456</p>
+        <p class="tip-text">测试账号：</p>
+        <p class="tip-text">admin/123456（全部权限）</p>
+        <p class="tip-text">test1/123456（仅首页+常用网址）</p>
+        <p class="tip-text">test2/123456（仅首页+API接口）</p>
+        <p class="tip-text">test3/123456（仅首页+关于页面）</p>
     </div>
 
     <script>
-        // 登录表单提交事件
         document.getElementById("loginForm").addEventListener("submit", function(e) {
-            // 阻止表单默认提交行为
             e.preventDefault();
-
-            // 获取输入的用户名和密码
             const username = document.getElementById("username").value.trim();
             const password = document.getElementById("password").value.trim();
             const errorTip = document.getElementById("errorTip");
 
-            // 简单登录验证（可后续修改为后台接口验证）
-            const validUsername = "admin";
-            const validPassword = "123456";
+            // 定义所有合法账号、密码、权限
+            const userList = [
+                {
+                    username: "admin",
+                    password: "123456",
+                    // 超级管理员，允许访问所有页面
+                    allowPages: ["index.html", "website.html", "api.html", "about.html"]
+                },
+                {
+                    username: "test1",
+                    password: "123456",
+                    allowPages: ["index.html", "website.html"]
+                },
+                {
+                    username: "test2",
+                    password: "123456",
+                    allowPages: ["index.html", "api.html"]
+                },
+                {
+                    username: "test3",
+                    password: "123456",
+                    allowPages: ["index.html", "about.html"]
+                }
+            ];
 
-            if (username === validUsername && password === validPassword) {
-                // 登录成功：保存登录状态到本地存储（有效期24小时）
+            // 查找匹配的用户
+            const currentUser = userList.find(item => 
+                item.username === username && item.password === password
+            );
+
+            if (currentUser) {
+                // 登录成功，存储用户信息和权限
                 const loginState = {
                     isLogin: true,
                     username: username,
-                    expireTime: new Date().getTime() + 24 * 60 * 60 * 1000 // 24小时后过期
+                    allowPages: currentUser.allowPages,
+                    expireTime: new Date().getTime() + 24 * 60 * 60 * 1000
                 };
                 localStorage.setItem("saikenLoginState", JSON.stringify(loginState));
-
-                // 跳转至首页
                 window.location.href = "index.html";
             } else {
-                // 登录失败：显示错误提示
+                // 登录失败
                 errorTip.style.display = "block";
-                // 3秒后隐藏错误提示
                 setTimeout(() => {
                     errorTip.style.display = "none";
                 }, 3000);
