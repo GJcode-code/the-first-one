@@ -201,11 +201,7 @@
             <div class="dropdown" onclick="toggleDropdown()">
                 <button class="dropdown-btn">更多 ▾</button>
                 <ul class="dropdown-menu" id="dropdownMenu">
-                    <li><a href="index.html" onclick="closeDropdown()">首页</a></li>
-                    <li><a href="website.html" onclick="closeDropdown()">常用网址</a></li>
-                    <li><a href="api.html" onclick="closeDropdown()">API接口</a></li>
-                    <li><a href="about.html" onclick="closeDropdown()">关于</a></li>
-                     <li><a href="javascript:void(0);" onclick="logout()">退出登录</a></li>
+                    /*空容器做动态菜单*/
                 </ul>
             </div>
         </div>
@@ -250,7 +246,41 @@ function checkAuth() {
     }
     return true;
 }
+// ---------------------- 动态渲染下拉菜单（根据权限） ----------------------
+function renderDropdownMenu() {
+    const loginStateStr = localStorage.getItem("saikenLoginState");
+    if (!loginStateStr) return;
 
+    const loginState = JSON.parse(loginStateStr);
+    const allowPages = loginState.allowPages; // 当前用户可访问的页面列表
+    const menuContainer = document.getElementById("dropdownMenu");
+    menuContainer.innerHTML = ""; // 清空原有菜单
+
+    // 定义所有页面的「文件名-菜单名称」映射（与权限列表对应）
+    const pageMap = [
+        { page: "index.html", name: "首页" },
+        { page: "website.html", name: "常用网址" },
+        { page: "api.html", name: "API接口" },
+        { page: "about.html", name: "关于" }
+    ];
+
+    // 遍历可访问页面，生成菜单选项
+    allowPages.forEach(page => {
+        const pageItem = pageMap.find(item => item.page === page);
+        if (pageItem) {
+            const li = document.createElement("li");
+            li.innerHTML = `<a href="${pageItem.page}" onclick="closeDropdown()">${pageItem.name}</a>`;
+            menuContainer.appendChild(li);
+        }
+    });
+
+    // 最后添加「退出登录」选项（所有账号都显示）
+    const logoutLi = document.createElement("li");
+    logoutLi.innerHTML = `<a href="javascript:void(0);" onclick="logout()">退出登录</a>`;
+    menuContainer.appendChild(logoutLi);
+}
+        
+        
 function logout() {
     localStorage.removeItem("saikenLoginState");
     closeDropdown();
@@ -321,10 +351,16 @@ window.onload = function() {
             }
         }
 
-        // 页面加载渲染卡片
-        window.onload = function() {
-            renderApiCards();
-        };
+       // 页面加载时执行校验、渲染菜单和卡片
+window.onload = function() {
+    const authOk = checkAuth();
+    if (!authOk) return;
+    
+    // 渲染权限对应的下拉菜单
+    renderDropdownMenu();
+    // 原有逻辑：渲染API卡片
+    renderApiCards();
+};
         // ---------------------- 退出登录功能 ----------------------
 function logout() {
     // 清除本地存储的登录状态
